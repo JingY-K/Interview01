@@ -1,0 +1,18 @@
+server:
+  port: 8899
+
+spring:    
+  datasource:
+    url: jdbc:h2:mem:coindesk # h2 database 連接位址
+    driver-class-name: org.h2.Driver # 配置driver
+    username: sa # database 用戶名
+    password:  # database 密碼
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    
+
+
+

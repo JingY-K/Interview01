@@ -1,0 +1,2 @@
+00:00:23.269 default [http-nio-8899-exec-4] INFO  c.w.i.c.R.CoindeskRestService - get class from non static
+00:00:26.413 default [http-nio-8899-exec-6] INFO  c.w.i.c.R.CoindeskRestService - get class from non static

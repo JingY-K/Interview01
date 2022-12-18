@@ -1,0 +1,70 @@
+<configuration>
+	<!-- 設置變數，將檔案位置設為./logs -->
+	<property name="LOG_PATH" value="./logs" />
+
+	<!--输出到Console -->
+	<appender name="console"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<!--用ThresholdFilter過濾ERROR以上級別才顯示在terminal上~ -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+		<encoder charset="UTF-8">
+			<!-- 印出Log的格式 -->
+			<!-- %d{YYYY-MM-dd HH: mm:ss.SSS} log 時間 -->
+			<!-- %thread 執行緒名字 -->
+			<!-- %-5level log級別且顯示5個字，靠左對齊 -->
+			<!-- %logger log的名字 -->
+			<!-- %msg log訊息 -->
+            <pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!--输出到文件 -->
+	<appender name="file"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 輸出文件的位置，以每一天做切割 -->
+			<fileNamePattern>${LOG_PATH}/coindesk.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<!--保留30天的歷史紀錄 -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<!--設定WARN以上級別才需要輸出至檔案 -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+		<encoder charset="UTF-8">
+			<!--Log的格式 -->
+			<pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- 第一個檔案輸出,每天產生一個檔案 -->
+	<appender name="FILE1"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 輸出檔案路徑+檔名 -->
+			<!-- 輸出文件的位置，以每一天做切割 -->
+			<fileNamePattern>${LOG_PATH}/coindesk.error.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+		</rollingPolicy>
+		<!-- 設定WARN以上級別才需要輸出至檔案 -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+		<encoder charset="UTF-8">
+			<!--Log的格式 -->
+			<pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="DEBUG">
+		<!--把appender加上去 -->
+		<appender-ref ref="console" />
+		<appender-ref ref="file" />
+	</root>
+
+</configuration>
